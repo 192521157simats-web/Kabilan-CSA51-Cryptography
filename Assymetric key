@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+long long power(long long base, long long exp, long long mod)
+{
+    long long result = 1;
+
+    while(exp > 0)
+    {
+        if(exp % 2 == 1)
+            result = (result * base) % mod;
+
+        base = (base * base) % mod;
+        exp = exp / 2;
+    }
+
+    return result;
+}
+
+int main()
+{
+    long long p = 3;
+    long long q = 11;
+    long long n = p * q;
+    long long phi = (p - 1) * (q - 1);
+
+    long long e = 7;
+    long long d = 3;
+
+    long long message;
+
+    printf("Enter message (less than %lld): ", n);
+    scanf("%lld", &message);
+
+    long long cipher = power(message, e, n);
+    long long plain = power(cipher, d, n);
+
+    printf("\nValue of n = %lld", n);
+    printf("\nValue of phi = %lld", phi);
+
+    printf("\nPublic Key (e,n) = (%lld,%lld)", e, n);
+    printf("\nPrivate Key (d,n) = (%lld,%lld)", d, n);
+
+    printf("\nEncrypted Message = %lld", cipher);
+    printf("\nDecrypted Message = %lld\n", plain);
+
+    return 0;
+}
